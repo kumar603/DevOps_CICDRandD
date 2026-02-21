@@ -97,8 +97,12 @@ git add .
 git commit -m "Fixed Default Connection"
 
 # 3. Push to G
+git push  
+
  Where to See Logs
 Since your runner is running as a background service, you won't see a black window anymore. Here is where to check what's happening:
+
+https://github.com/kumar603/DevOps_CICDRandD/settings/actions/runners
 
 A. GitHub Actions (Best for Pipeline Status) This is the primary place to check. The runner sends logs back to GitHub.
 
