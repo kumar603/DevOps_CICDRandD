@@ -1,0 +1,11 @@
+**/.dockerignore
+**/.env
+**/bin
+**/obj
+.git
+.github
+.vs
+.vscode
+docker-compose.yml
+README.md
+**/Properties/AssemblyInfo.cs

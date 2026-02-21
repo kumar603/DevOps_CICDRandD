@@ -1,0 +1,21 @@
+name: Local IIS Deployment
+
+# Trigger: Run this pipeline automatically when code is pushed to main
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  deploy-to-local-iis:
+    # This tells GitHub to run on YOUR laptop
+    runs-on: self-hosted
+
+    steps:
+    # 1. Checkout the code from the repository
+    - uses: actions/checkout@v3
+
+    # 2. Run your existing build script in "auto" mode (no pauses)
+    - name: Run Local Build & Deploy Script
+      run: .\ci-cd\build-scripts\build.bat auto

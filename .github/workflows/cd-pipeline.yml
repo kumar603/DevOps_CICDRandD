@@ -1,0 +1,104 @@
+name: CD Pipeline - Package, Push & Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_run:
+    workflows: ["CI Pipeline - Build & Test"]
+    types: [completed]
+    branches: [ main ]
+
+jobs:
+  # ================================
+  # STAGE 3: PACKAGE
+  # ================================
+  package:
+    name: "Stage 3: Package"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event.workflow_run.conclusion == 'success'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: "[3.2] Build Docker image"
+      run: docker build -t devopsstack:latest .
+    
+    - name: List Docker images
+      run: docker images | grep devopsstack
+
+  # ================================
+  # STAGE 4: PUSH
+  # ================================
+  push:
+    name: "Stage 4: Push"
+    runs-on: ubuntu-latest
+    needs: package
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: "[4.1] Prepare Docker image for registry"
+      run: |
+        echo "In production, this stage would push to:"
+        echo "  - Docker Hub (docker push myregistry/devopsstack:latest)"
+        echo "  - Azure Container Registry"
+        echo "  - AWS ECR"
+        echo ""
+        echo "For localhost, Docker image is stored locally"
+    
+    - name: "[4.2] Image ready for deployment"
+      run: echo "✅ Docker image prepared and ready for deployment"
+
+  # ================================
+  # STAGE 5: DEPLOY
+  # ================================
+  deploy-staging:
+    name: "Stage 5: Deploy (Staging)"
+    runs-on: ubuntu-latest
+    needs: push
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: "[5.1] Deploy to Staging Environment"
+      run: |
+        echo "✅ Application ready for staging deployment"
+        echo ""
+        echo "For localhost, run:"
+        echo "  docker-compose up"
+        echo ""
+        echo "For production:"
+        echo "  Deploy Docker image to staging server"
+        echo "  Run health checks"
+        echo "  Wait for manual approval before production"
+    
+    - name: "[5.2] Run health checks"
+      run: echo "✅ Staging deployment ready for testing"
+
+  deploy-production:
+    name: "Stage 5: Deploy (Production)"
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: ⚠️  "[5.3] PRODUCTION DEPLOYMENT"
+      run: |
+        echo "⚠️  PRODUCTION DEPLOYMENT REQUIRES MANUAL APPROVAL"
+        echo ""
+        echo "This step would:"
+        echo "  1. Deploy to production environment"
+        echo "  2. Update load balancers"
+        echo "  3. Monitor application health"
+        echo "  4. Enable rollback if needed"
+        echo ""
+        echo "In GitHub Actions, add 'environment: production' for approval"
+

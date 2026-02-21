@@ -1,0 +1,11 @@
+# Ignore Visual Studio temporary files
+.vs/
+*.user
+
+# Ignore Build Output
+bin/
+obj/
+
+# Ignore Publish Output (The pipeline creates this)
+publish/
+logs/
