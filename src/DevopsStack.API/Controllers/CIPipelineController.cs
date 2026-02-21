@@ -12,7 +12,7 @@ namespace DevopsStack.API.Controllers
         {
             var response = new InfoResponse
             {
-                Application = "DevOpsStack CI/CD Demo",
+                Application = "DevOpsStack CI/CD Demo - Kiran",
                 Version = "1.0.0",
                 Status = "Running",
                 Framework = "ASP.NET Core 8",

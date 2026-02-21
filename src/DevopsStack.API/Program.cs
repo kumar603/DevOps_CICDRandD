@@ -22,7 +22,7 @@ app.UseSwaggerUI(c => {
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapGet("/test-deploy", () => "Deployment Updated Successfully!");
+app.MapGet("/test-deploy", () => "CI/CD Pipeline is working! Hello from GitHub!");
 
 app.Run();
 
