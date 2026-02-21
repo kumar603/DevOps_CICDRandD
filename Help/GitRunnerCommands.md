@@ -87,3 +87,28 @@ Go to the Log On tab.
 Select Local System account.
 Click OK.
 Right-click the service again and select Restart.
+
+
+
+# 1. Stage all changes
+git add .
+
+# 2. Commit with a message
+git commit -m "Fixed Default Connection"
+
+# 3. Push to G
+ Where to See Logs
+Since your runner is running as a background service, you won't see a black window anymore. Here is where to check what's happening:
+
+A. GitHub Actions (Best for Pipeline Status) This is the primary place to check. The runner sends logs back to GitHub.
+
+Go to your GitHub Repository.
+Click the Actions tab.
+Click the latest run (e.g., "Fixed bug in API").
+Click deploy-to-local-iis.
+Expand the Run Local Build & Deploy Script step to see the build.bat output.
+
+# Qucik Checkins
+Make a change in your code (e.g., change "Kiran" to "Kiran V2" in CIPipelineController.cs).
+Run .\quick-push.bat in your terminal.
+Watch the automation happen.
